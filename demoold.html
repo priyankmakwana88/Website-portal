@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+		<title>
+			Demo Application
+		</title>
+		<meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+		<!-- <script src="demo.js" type="text/javascript"></script>
+		<script src="crypto-js.js" type="text/javascript"></script> -->
+		<script src="data.js" type="text/javascript"></script>
+		
+		<!-- SCRIPT PART1 -->
+		<script>
+		
+		// var mainApp = angular.module('mainApp',[])
+		// mainApp.controller('controller', function($scope){
+		// 	console.log(billers)
+		// 			$scope.category_list = []
+		// 			billers.forEach(function(biller){
+					
+		// 				if(!($scope.category_list.includes(biller.biller_category)))
+		// 					$scope.category_list.push(biller.biller_category);													
+		// 			})	
+		// })
+
+		var mainApp = angular.module('mainApp',[])
+		mainApp.controller('controller_biller', function($scope){
+			//console.log(billers)
+					
+					$scope.category = 'None';
+					$scope.test1 = function (category) {
+						$scope.category = category;
+						$scope.biller_list = [];
+						billers.forEach(function(biller){
+						if(biller.biller_category == category)	{
+
+							if(!($scope.biller_list.includes(biller.biller_name)))
+                   				 $scope.biller_list.push(biller.biller_name);
+							//$scope.biller_list.push(biller.biller_name);	
+						}												
+					})	
+
+					}
+					
+		})
+		</script>	
+	</head>
+
+	<body>
+			<div ng-app="mainApp"  ng-controller="controller_biller">
+
+					<!-- <input ng-model="notgood" /> -->
+			
+					<h3>This Category is {{category}}</h3>
+			
+					<button ng-click="test1('Electricity')">Electric</button>
+					<button ng-click="test1('Gas')">Gas</button>
+					<button ng-click="test1('Mobile Postpaid')">Mobile</button>
+					
+					<div  ng-repeat = "bill in biller_list ">
+			
+							{{bill}}
+								
+					</div>
+			
+				</div>
+
+		<!-- <div ng-app="mainApp" ng-controller="controller">
+			<div class="container" style="margin-top:400px">
+				<div  ng-repeat = "category in category_list ">
+			
+					{{category}}
+						
+				</div>
+			</div>	
+		</div> -->
+
+		
+		<!-- <span class="glyphicon glyphicon-menu-up"></span> -->
+		
+		
+			
+	
+	</body>
+</html>
