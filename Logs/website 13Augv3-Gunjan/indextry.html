@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html xmlns="http://wwww.w3.org/1999/xhtml">
+<head>
+    <title>Bill Payments</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- <script src="bootstrap.min.css"></script> -->
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    
+    <!-- <script src="bootstrap.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="data.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="style.css">
+<!-- STYLING -->
+<!-- <style> 
+
+      h1{
+          text-color: aqua;
+        }
+      div.field
+        {
+          margin-left: 4cm;
+          margin-top: 6cm;
+          width:10;
+        }
+
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+
+    #pay{
+      background-color:#f7c465;
+      font-size: 20px;
+      height: 200px;
+    }
+    #bdlogo
+    {
+      position: relative;
+      left:1600px;
+      bottom:160px;
+     
+    }
+    #foot{
+      background-color:#faf8a5;
+    }
+    #para{
+      text-align: justify;
+    }
+
+    #easypay{
+      margin-bottom: 40px;
+    }
+  </style>  -->
+
+  
+
+  <script>
+
+    var mainApp = angular.module('myApp',[])
+                  mainApp.controller('controller_biller', function($scope){
+                  //console.log(billers)
+                       
+                      //  $scope.category = 'None';
+                      //  $scope.test1 = function (category) 
+                      //                 {
+                      //                   $scope.category = category;
+                      //                   $scope.biller_list = [];
+                                        
+                      //                   billers.forEach(function(biller)
+                      //                    {
+                      //                   if(biller.biller_category == category)
+                      //                   {
+                      //                     if(!($scope.biller_list.includes(biller.biller_name)))
+                      //                         $scope.biller_list.push(biller.biller_name);
+                      //                   }												
+                      //                    })	
+   
+                      //                  }
+
+
+                      $scope.category = 'None';
+                        $scope.final_biller_list = [];					
+                        $scope.test1 = function (category) {
+                          this.category = category;
+                          
+                          $scope.biller_list = [];
+                          $scope.country_list = [];
+                          billers.forEach(function(biller){
+                          if(biller.biller_category == category)	{
+
+                            if(!($scope.biller_list.includes(biller.biller_name)))
+                              $scope.biller_list.push(biller.biller_name);
+                                
+                            if(!($scope.country_list.includes(biller.biller_reg_state)) && !(biller.biller_reg_state == undefined)){
+                                $scope.country_list.push(biller.biller_reg_state);
+                            }
+                            
+                          }												
+                        })	
+                        $scope.final_biller_list =$scope.biller_list;
+                        }
+					
+
+                                                          
+                       $scope.selectedBiller = '';
+					              $scope.find_auth = function (selectedBiller) 
+                        {
+                          $scope.selectedBiller = selectedBiller;
+                          $scope.auth_list = [];
+                          $scope.regex_list = [];
+                          $scope.logo = 'None';
+                          $scope.bill_copy ='None';
+
+                          billers.forEach(function(biller)
+                          {
+                              if(biller.biller_name == selectedBiller)	
+                              {
+                                //console.log(biller.authenticators[0].regex);
+                                for(var i=0;i<biller.authenticators.length;i++)
+                                {
+                                
+                                  if(!($scope.auth_list.includes(biller.authenticators[i].parameter_name)))
+                                  {                                 
+                                    $scope.auth_list.push(biller.authenticators[i].parameter_name);
+                                  }
+
+                                  if(!($scope.regex_list.includes(biller.authenticators[i].regex)) )
+                                  {
+                                    $scope.regex_list.push(biller.authenticators[i].regex);
+                                  }	
+                                }
+                                                                
+                                  $scope.logo = biller.biller_logo;
+                                  $scope.bill_copy = biller.biller_bill_copy;
+                                                  
+                                  //console.log($scope.logo);
+							                }												
+						              })
+					                          //console.log($scope.regex_list);	
+
+					              }
+                      
+                      
+                      // FILTER BY LOCATION
+                      $scope.location = 'None';
+                      $scope.find_loc_biller = function (location) {
+                        //console.log($scope.category );
+                        $scope.location = location;
+                        //console.log($scope.location);
+                        $scope.biller_list = [];
+
+                        billers.forEach(function(biller){
+                        if(biller.biller_category == $scope.category)	{
+                          if(biller.biller_reg_state == location){
+
+                            if(!($scope.biller_list.includes(biller.biller_name)))
+                              $scope.biller_list.push(biller.biller_name);
+                                
+                          }
+                        }												
+                      })	
+                      console.log($scope.biller_list);
+                      $scope.final_biller_list =$scope.biller_list;
+                      }
+
+                  $scope.cat_list=[];
+                        billers.forEach(function(biller){
+                            if(!($scope.cat_list.includes(biller.biller_category)))
+                            {
+                              $scope.cat_list.push(biller.biller_category);  
+                            }
+
+                        })
+
+                        // $scope.images = [
+                        //        { "elec.jpg"},
+                        //         {"mobile.png"},
+                        //         {"dth.png"}
+                        //     ];
+
+           })
+                
+            
+
+   </script>
+</head>
+
+
+
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Welcome</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#bottom">About Us</a></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">Partner with us</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron" id="pay">
+  <div class="container text-center" id="easypay">
+    <h1 >EasyPay</h1>      
+    <p font-size: 100px >Pay ALL Your Bills Here.</p>
+  </div>
+ 
+</div>
+
+<div ng-app="myApp" ng-controller="controller_biller">
+    <span ng-repeat="cat in cat_list">{{cat}}&nbsp&nbsp&nbsp</span>
+  
+</div>
+
+
+<div ng-app="myApp" ng-controller="controller_biller">
+        <span ng-repeat="img in images"><img ng-src="{{img}}" alt="Image">&nbsp&nbsp&nbsp</span>
+
+</div>
+
+<!-- 1ST ROW -->
+<div ng-app="myApp" ng-controller="controller_biller">
+  <div class="row" align="center"  >
+
+    <div class="col-lg-1" >
+      <p>Electricity</p>
+      <a ng-click="test1('Electricity')"><img src="elec.jpg" class="img-responsive" height="30%" width="30%" alt="Image" ></a>
+          
+    </div>
+    
+    <div class="col-lg-1" > 
+      <p>Mobile Recharge</p>
+      <a ng-click="test1('Mobile Postpaid')"><img src="mobile.png" class="img-responsive"height="30%" width="30%" alt="Image" ></a>
+   
+    </div>
+
+    <div class="col-lg-1"> 
+      <p>DTH</p>
+      <a ng-click="test1('DTH')"><img src="dth.png" class="img-responsive"height="30%" width="30%"alt="Image" ></a>
+
+    </div>
+
+    <div class="col-lg-1">
+      <p>Landline</p>
+      <a ng-click="test1('Landline Postpaid')"><img src="landline.jpg" class="img-responsive"height="30%" width="30%" alt="Image" ></a>
+    
+    </div>
+
+	  <div class="col-lg-1">
+      <p>Broadband</p>
+      <a ng-click="test1('Broadband Postpaid')"><img src="broadband.jpg" class="img-responsive"height="30%" width="30%" alt="Image" ></a>
+
+    </div>
+
+	  <div class="col-lg-1">
+      <p>Gas</p>
+      <a ng-click="test1('Gas')"><img src="gas.jpg" class="img-responsive" height="30%" width="30%" alt="Image" ></a>
+     
+    </div>
+
+    <div class="col-lg-1 col-centered" >
+      <p>Loan</p>
+      <a ng-click="test1('Loan')"><img src="loan.png" class="img-responsive"height="30%" width="30%" alt="Image" padding="0px"></a>
+
+    </div>
+    <div class="col-lg-1"> 
+      <p>Credit Card</p>
+      <a ng-click="test1('Credit Card')"><img src="credit.png" class="img-responsive" height="30%" width="30%" alt="Image" ></a>
+    
+    </div>
+    <div class="col-lg-1"> 
+      <p>Mutual Fund</p>
+      <a ng-click="test1('Mutual Fund')"><img src="mutual.png" class="img-responsive" height="30%" width="30%" alt="Image" ></a>
+
+    </div>
+    <div class="col-lg-1">
+      <p>Tax</p>
+      <a ng-click="test1('Tax')"><img src="tax.png" class="img-responsive" height="30%" width="30%" alt="Image" ></a>
+
+    </div>
+	<div class="col-lg-1">
+      <p>Donation</p>
+      <a ng-click="test1('Donation')"><img src="donation.png" class="img-responsive"height="30%" width="30%" alt="Image" ></a>
+
+    </div>
+	<div class="col-lg-1">
+      <p>Subscription</p>
+      <a ng-click="test1('Subscription')"><img src="subs.png" class="img-responsive" height="30%" width="30%" alt="Image" ></a>
+
+    </div>
+    
+
+
+	
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+
+<!--   2ND ROW -->
+  <div class="row"  width="100%" align="center" margin-top="50%" >
+    <!-- <div class="col-lg-2 col-centered" >
+      <p>Loan</p>
+      <a ng-click="test1('Loan')"><img src="loan.png" class="img-responsive"height="20%" width="20%" alt="Image" padding="0px"></a>
+
+    </div>
+    <div class="col-lg-2"> 
+      <p>Credit Card</p>
+      <a ng-click="test1('Credit Card')"><img src="credit.png" class="img-responsive" height="20%" width="20%" alt="Image" ></a>
+    
+    </div>
+    <div class="col-lg-2"> 
+      <p>Mutual Fund</p>
+      <a ng-click="test1('Mutual Fund')"><img src="mutual.png" class="img-responsive" height="20%" width="20%" alt="Image" ></a>
+
+    </div>
+    <div class="col-lg-2">
+      <p>Tax</p>
+      <a ng-click="test1('Tax')"><img src="tax.png" class="img-responsive" height="20%" width="20%" alt="Image" ></a>
+
+    </div>
+	<div class="col-lg-2">
+      <p>Donation</p>
+      <a ng-click="test1('Donation')"><img src="donation.png" class="img-responsive"height="20%" width="20%" alt="Image" ></a>
+
+    </div>
+	<div class="col-lg-2">
+      <p>Subscription</p>
+      <a ng-click="test1('Subscription')"><img src="subs.png" class="img-responsive" height="20%" width="20%" alt="Image" ></a>
+
+    </div>
+     -->
+    <div class="field"  width="100%" align="left"   id="input">
+      
+      <!-- FILTER BY COUNTRY -->
+      <div ng-show="country_list.length > 0"><b>Select Location:</b></div>
+      <select  id="select" ng-model="selectedCountry"  ng-show="country_list.length > 0">
+							<option ng-repeat="location in country_list" value="{{location}}" ng-click="find_loc_biller(selectedCountry)"> {{location}} </option>
+            </select>
+
+            <br>
+            <br>
+      <!--  ng-show="biller_list.length > 0" -->
+       <div ng-show="biller_list.length > 0"><b>Select Biller:</b></div>
+        <select id="select" ng-model="selectedBiller" ng-show="biller_list.length > 0">
+				<option ng-repeat="billername in biller_list" value="{{billername}}" ng-click="find_auth(selectedBiller)"> {{billername | uppercase}} </option>
+        </select>
+        <br>
+        <br>
+        <br>
+        <table cellspacing="50">
+        <tr>
+              <th>{{selectedBiller}}</h1></th>
+              
+        </tr>
+        <tr>
+            <td colspan="3" style="padding:30px"><img ng-show="auth_list.push()" ng-hide="biller_list.push()" src="{{logo}}"></td>
+        </tr>  
+      
+        </table>
+       
+	
+           <div>
+             
+            <div id="auth" ng-show="auth_list.push()" ng-hide="biller_list.push()" > 
+          <table  id="tab2" width="30%" style="padding:px">
+							
+            <tr   ng-repeat = "auth in auth_list">
+               <td colspan = "2">Enter {{auth}} </td>
+               <td>:</td>
+               <td colspan = "3"><input   id="select" type="text" name="fname" ></td>  
+            </tr>
+
+            
+            <tr >
+                
+              <td colspan = "2"></td>
+              <td></td>
+              <td colspan = "3" style="padding:30px" ><button id="button"   ng-if="auth_list.push()" type="submit" form="form1" value="Submit" >Submit</button></td> 
+               
+            </tr>
+          
+
+          </table>
+            </div>
+          <div id="auth" ng-show="selectedBiller" ng-hide="biller_list.push()">
+          <input type = "checkbox" ng-model = "showHide1" ng-if="auth_list.push()" >Show sample
+          <button  ng-show = "showHide1"><img src="{{bill_copy}}"></button>
+					</div>
+    </div>
+  </div>
+
+  
+</div>
+<footer class="container-fluid text-center" id="foot">
+  <br>
+  <br>
+
+  <!-- <table id="tab" border-spacing="5">
+      <tr><th ></th><th ></th><th ></th><th ></th><th ></th><th ></th></tr>
+      <tr>
+        <th colspan="2">Verified By</th>
+        <th ></th>
+        <th colspan="2"> Connect Us</th>
+        <th colspan="2">Powered By</th>
+      </tr>
+     
+    </table> -->
+
+   
+       
+  <div class="grid-container">
+      <div class="item1"><b>Company</b></div>
+      <div class="item2"><b>Help & Support</b></div>
+      <div class="item3"><b>Policies</b></div>  
+      
+      <div class="item4">About</div>
+      <div class="item5">Home</div>
+      <div class="item6">Privacy Policy</div>
+      <!-- <div class="item8"></div> -->
+      <div class="item7">Team</div>
+      <div class="item8">Mobile Apps</div>  
+      <div class="item9">Terms & Conditions</div>
+      <!-- <div class="item12"></div> -->
+      <div class="item10">Career</div>
+    
+      <div class="item11">Payment Options</div>
+      <div class="item12">Refund Policy</div>
+      <!-- <div class="item16"></div> -->
+      <div class="item13">Blog</div>
+    
+      <div class="item14">FAQ</div>
+      <div class="item15">Grievance Policy</div>
+      <div class="item16"></div>
+
+      <!-- <div class="item17"><bold>Verified by</bold></div>
+        <div class="item18">Connect Us</div>
+        <div class="item19">Powered by</div>  
+        <div class="item20"><img src="pci2.jpg" height="15%"  ></div>
+        <div class="item21"><img src="fb.png" height="15%"  ><img src="insta.jfif" height="15%"  ><img src="twi.png" height="15%"  ></div>
+        <div class="item22"><img src="BD-Logo-Black.png" height="15%"></div>  
+       -->
+      </div>
+    </div>
+    <br>
+    <div class="grid-container">
+        <div class="item1"><b>Verified by</b></div>
+        <div class="item2"><b>Connect Us</b></div>
+        <div class="item3"><b>Powered by</b></div>  
+        <div class="item4"><img src="pci2.jpg" height="15%"  ></div>
+        <div class="item5"><img src="fb.png" height="15%"  ><img src="insta.jfif" height="15%"  ><img src="twi.png" height="15%"  ></div>
+        <div class="item6"><img src="BD-Logo-Black.png" height="15%"></div>  
+    </div>
+
+    
+  
+</footer>
+
+</body>
+</html>

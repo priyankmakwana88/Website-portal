@@ -1,0 +1,319 @@
+<!-- <html>
+    <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+            <script src="data.js" type="text/javascript"></script>
+<script>
+
+        var mainApp = angular.module('myApp',[])
+                      mainApp.controller('controller_biller', function($scope){
+                      //console.log(billers)
+                           
+                          //  $scope.category = 'None';
+                          //  $scope.test1 = function (category) 
+                          //                 {
+                          //                   $scope.category = category;
+                          //                   $scope.biller_list = [];
+                                            
+                          //                   billers.forEach(function(biller)
+                          //                    {
+                          //                   if(biller.biller_category == category)
+                          //                   {
+                          //                     if(!($scope.biller_list.includes(biller.biller_name)))
+                          //                         $scope.biller_list.push(biller.biller_name);
+                          //                   }												
+                          //                    })	
+       
+                          //                  }
+    
+    
+                          $scope.category = 'None';
+                            $scope.final_biller_list = [];					
+                            $scope.test1 = function (category) {
+                              this.category = category;
+                              
+                              $scope.biller_list = [];
+                              $scope.country_list = [];
+                              billers.forEach(function(biller){
+                              if(biller.biller_category == category)	{
+    
+                                if(!($scope.biller_list.includes(biller.biller_name)))
+                                  $scope.biller_list.push(biller.biller_name);
+                                    
+                                if(!($scope.country_list.includes(biller.biller_reg_state)) && !(biller.biller_reg_state == undefined)){
+                                    $scope.country_list.push(biller.biller_reg_state);
+                                }
+                                
+                              }												
+                            })	
+                            $scope.final_biller_list =$scope.biller_list;
+                            }
+                        
+    
+                                                              
+                           $scope.selectedBiller = '';
+                                      $scope.find_auth = function (selectedBiller) 
+                            {
+                              $scope.selectedBiller = selectedBiller;
+                              $scope.auth_list = [];
+                              $scope.regex_list = [];
+                              $scope.logo = 'None';
+                              $scope.bill_copy ='None';
+    
+                              billers.forEach(function(biller)
+                              {
+                                  if(biller.biller_name == selectedBiller)	
+                                  {
+                                    //console.log(biller.authenticators[0].regex);
+                                    for(var i=0;i<biller.authenticators.length;i++)
+                                    {
+                                    
+                                      if(!($scope.auth_list.includes(biller.authenticators[i].parameter_name)))
+                                      {                                 
+                                        $scope.auth_list.push(biller.authenticators[i].parameter_name);
+                                      }
+    
+                                      if(!($scope.regex_list.includes(biller.authenticators[i].regex)) )
+                                      {
+                                        $scope.regex_list.push(biller.authenticators[i].regex);
+                                      }	
+                                    }
+                                                                    
+                                      $scope.logo = biller.biller_logo;
+                                      $scope.bill_copy = biller.biller_bill_copy;
+                                                      
+                                      //console.log($scope.logo);
+                                                }												
+                                          })
+                                                  //console.log($scope.regex_list);	
+    
+                                      }
+                          
+                          
+                          // FILTER BY LOCATION
+                          $scope.location = 'None';
+                          $scope.find_loc_biller = function (location) {
+                            //console.log($scope.category );
+                            $scope.location = location;
+                            //console.log($scope.location);
+                            $scope.biller_list = [];
+    
+                            billers.forEach(function(biller){
+                            if(biller.biller_category == $scope.category)	{
+                              if(biller.biller_reg_state == location){
+    
+                                if(!($scope.biller_list.includes(biller.biller_name)))
+                                  $scope.biller_list.push(biller.biller_name);
+                                    
+                              }
+                            }												
+                          })	
+                          console.log($scope.biller_list);
+                          $scope.final_biller_list =$scope.biller_list;
+                          }
+    
+                      
+               })
+    
+       </script>
+       </head>
+       <body ng-app="myApp" ng-controller="controller_biller">
+            <img src="{{bill_copy}}">
+       </body>
+       </html> -->
+
+       <!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+		<title>
+			Demo Application
+		</title>
+		<meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+		<!-- <script src="demo.js" type="text/javascript"></script>
+		<script src="crypto-js.js" type="text/javascript"></script> -->
+		<script src="data.js" type="text/javascript"></script>
+		
+		<!-- SCRIPT PART1 -->
+		<script>
+
+		var mainApp = angular.module('mainApp',[])
+		mainApp.controller('controller_biller', function($scope){
+			//console.log(billers)
+					
+					$scope.category = 'None';
+					$scope.final_biller_list = [];					
+					$scope.test1 = function (category) {
+						this.category = category;
+						
+						$scope.biller_list = [];
+						$scope.country_list = [];
+						billers.forEach(function(biller){
+						if(biller.biller_category == category)	{
+
+							if(!($scope.biller_list.includes(biller.biller_name)))
+								$scope.biller_list.push(biller.biller_name);
+									
+							if(!($scope.country_list.includes(biller.biller_reg_state)) && !(biller.biller_reg_state == undefined)){
+								   $scope.country_list.push(biller.biller_reg_state);
+							}
+							
+						}												
+					})	
+					$scope.final_biller_list =$scope.biller_list;
+					}
+					
+
+					// FILTER BY LOCATION
+					$scope.location = 'None';
+					$scope.find_loc_biller = function (location) {
+						//console.log($scope.category );
+						$scope.location = location;
+						//console.log($scope.location);
+						$scope.biller_list = [];
+
+						billers.forEach(function(biller){
+						if(biller.biller_category == $scope.category)	{
+							if(biller.biller_reg_state == location){
+
+								if(!($scope.biller_list.includes(biller.biller_name)))
+									$scope.biller_list.push(biller.biller_name);
+										
+							}
+						}												
+					})	
+					console.log($scope.biller_list);
+					$scope.final_biller_list =$scope.biller_list;
+					}
+					
+
+					// $scope.test1 = function (category) {
+					// 	$scope.category = category;
+					// 	$scope.biller_list = [];
+					// 	billers.forEach(function(biller){
+					// 	if(biller.biller_category == category)	{
+
+					// 		if(!($scope.biller_list.includes(biller.biller_name)))
+                   	// 			 $scope.biller_list.push(biller.biller_name);
+					// 		//$scope.biller_list.push(biller.biller_name);	
+					// 	}												
+					// })	
+
+					// }
+
+					$scope.selectedBiller = 'None';
+					$scope.find_auth = function (selectedBiller) {
+
+						$scope.selectedBiller = selectedBiller;
+						$scope.auth_list = [];
+						$scope.regex_list = [];
+						$scope.logo = 'None';
+						$scope.bill_copy ='None';
+
+						billers.forEach(function(biller){
+							if(biller.biller_name == selectedBiller)	{
+								//console.log(biller.authenticators[0].regex);
+								for(var i=0;i<biller.authenticators.length;i++){
+								
+									if(!($scope.auth_list.includes(biller.authenticators[i].parameter_name)) ){
+									
+										$scope.auth_list.push(biller.authenticators[i].parameter_name);
+									}
+									if(!($scope.regex_list.includes(biller.authenticators[i].regex)) ){
+									
+										$scope.regex_list.push(biller.authenticators[i].regex);
+									}	
+								}
+																								
+								$scope.logo = biller.biller_logo;
+								$scope.bill_copy = biller.biller_bill_copy;
+																
+							//console.log($scope.logo);
+							}												
+						})
+					//console.log($scope.regex_list);	
+
+					}
+
+					
+					
+		})
+
+		
+		</script>	
+	</head>
+
+	<body>
+			<div ng-app="mainApp"  ng-controller="controller_biller">
+			
+					<button ng-click="test1('Electricity')">Electric</button>
+					<button ng-click="test1('Gas')">Gas</button>
+					<button ng-click="test1('Mobile Postpaid')">Mobile</button>
+					
+					<!-- <div  ng-repeat = "bill in biller_list ">
+			
+							{{bill}}
+								
+					</div> -->
+
+					<!-- FILTER BY COUNTRY -->
+					<select ng-model="selectedCountry">
+							<option ng-repeat="location in country_list" value="{{location}}" ng-click="find_loc_biller(selectedCountry)"> {{location}} </option>
+						</select>
+					
+					<!-- DISPLAY BILLER NAMES -->
+					<select ng-model="selectedBiller">
+						<option ng-repeat="billername in final_biller_list" value="{{billername}}" ng-click="find_auth(selectedBiller)"> {{billername}} </option>
+					</select>
+
+					<!-- <select ng-model="selectedBiller">
+							<option ng-repeat="billername in biller_list" value="{{billername}}" ng-click="find_auth(selectedBiller)"> {{billername}} </option>
+						</select> -->
+
+				
+			
+					<h1>{{selectedBiller}}</h1>
+
+					<!-- <div  ng-repeat = "reg in regex_list ">
+			
+							{{reg}}
+								 -->
+					<!-- </div> -->
+
+					<div >
+						<form name="SaveForm" ng-submit="funcSave()">  
+							<table  >
+							
+								<tr ng-repeat = "auth in auth_list">
+							   		<td colspan = "2">Enter {{auth}} </td>
+							   		<td>:</td>
+							   		<td colspan = "3"><input type="text"  name="fname" ></td>  
+								</tr>
+								<tr>
+									<td colspan = "2"></td>
+									<td></td>
+									<td colspan = "3"><button type="submit" form="form1" value="Submit">Submit</button></td>  
+								</tr>
+
+							 </table>
+						</form>
+					</div>
+
+					<img src="{{logo}}">
+					<img src="{{bill_copy}}">
+				</div>
+		
+		
+
+		
+			
+	
+	</body>
+</html>
