@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html xmlns="http://wwww.w3.org/1999/xhtml">
+
+<head>
+  <title>Bill Payments</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- <script src="bootstrap.min.css"></script> -->
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <!-- <script src="bootstrap.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+  <script src="data.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="style.css">
+  <!-- STYLING -->
+  <script>
+
+    var mainApp = angular.module('myApp', [])
+    mainApp.controller('controller_biller', function ($scope) {
+
+      $scope.reloadPage = function() {
+        // $state.reload();
+        window.location.reload();
+      }
+
+      //Dynamic Category List
+      $scope.category_list = [];
+      billers.forEach(function (biller) {
+
+        if (!($scope.category_list.includes(biller.biller_category))) {
+          $scope.category_list.push(biller.biller_category);
+          //console.log($scope.category_list);
+        }
+
+      })
+
+      //$scope.category = 'None';
+      $scope.country_list=[];
+      $scope.final_biller_list = [];					
+					$scope.test1 = function (category) {
+            document.getElementById("select").selectedIndex = -1;
+            
+            //window.location.reload();
+						$scope.category = category;
+						//console.log($scope.category);
+						$scope.biller_list = [];
+						$scope.country_list = [];
+						billers.forEach(function(biller){
+						if(biller.biller_category == category)	{
+
+							if(!($scope.biller_list.includes(biller.biller_name))){
+                $scope.biller_list.push(biller.biller_name);
+                //console.log($scope.biller_list);
+              }
+									
+							if(!($scope.country_list.includes(biller.biller_location)) && !(biller.biller_location == undefined)){
+								   $scope.country_list.push(biller.biller_location);
+							}
+							
+						}												
+          })	
+
+          $scope.final_biller_list =$scope.biller_list;
+          
+          }
+          
+
+      // FILTER BY LOCATION
+      $scope.location = '';
+      $scope.find_loc_biller = function (location) {
+        //console.log($scope.category );
+        
+        $scope.location = location;
+        //console.log($scope.location);
+        $scope.biller_list = [];
+
+        billers.forEach(function (biller) {
+          if (biller.biller_category == $scope.category) {
+            if (biller.biller_location == location) {
+
+              if (!($scope.biller_list.includes(biller.biller_name)))
+                $scope.biller_list.push(biller.biller_name);
+
+            }
+          }
+        })
+        //console.log($scope.biller_list);
+        $scope.final_biller_list = $scope.biller_list;
+      }
+
+
+      $scope.selectedBiller = '';
+      $scope.find_auth = function (selectedBiller) {
+        //console.log(getElementById("sample1").selectedIndex);
+        $scope.selectedBiller = selectedBiller;
+        $scope.auth_list = [];
+        $scope.authL_list = [];
+        $scope.regex_list = [];
+        $scope.logo = '';
+        $scope.bill_copy = '';
+
+        billers.forEach(function (biller) {
+          //$scope.auth_list = [];
+          if (biller.biller_name == selectedBiller) {
+            //console.log(biller.authenticators[0].regex);
+            for (var i = 0; i < biller.authenticators.length; i++) {
+
+              if (!($scope.auth_list.includes(biller.authenticators[i]))) {
+                $scope.auth_list.push(biller.authenticators[i]);                
+                if(biller.authenticators[i].data_type == "List") {
+											$scope.authL_list.push(biller.authenticators[i]);	
+										
+									}
+              }
+
+              if (!($scope.regex_list.includes(biller.authenticators[i].regex))) {
+                $scope.regex_list.push(biller.authenticators[i].regex);
+              }
+            }
+            console.log("Inside");
+                console.log($scope.auth_list);
+
+            $scope.logo = biller.biller_logo;
+            $scope.bill_copy = biller.biller_bill_copy;
+
+            //console.log($scope.logo);
+          }
+        })
+        $scope.location = '';
+        console.log($scope.auth_list);
+      }
+      
+
+    })
+
+  </script>
+</head>
+
+
+<body>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Welcome</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#bottom">About Us</a></li>
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Partner with us</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="jumbotron" id="pay">
+    <div class="container text-center" id="easypay">
+      <h1>EasyPay</h1>
+      <p font-size: 100px>Pay ALL Your Bills Here.</p>
+    </div>
+
+  </div>
+
+  <!-- 1ST ROW -->
+  <div ng-app="myApp" ng-controller="controller_biller">
+    <div class="row" align="center">
+
+      <div class="col-lg-1" ng-repeat = "category in category_list ">
+        <p>{{category}}</p>
+        <a class="bill" ng-click="test1(category)"><img src="images/{{category}}.png" class="img-responsive" height="30%" width="30%"
+            alt="Image"></a>
+      </div>
+      
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+      <div class="field" width="100%" align="left" id="input">
+
+
+        <!-- FILTER BY COUNTRY -->
+        <div ng-show="country_list.length > 0">Select Location:</div>
+        <select id="select" ng-model="selectedCountry" ng-show="country_list.length > 0">
+          <option ng-repeat="location in country_list" value="{{location}}" ng-click="find_loc_biller(selectedCountry)">
+            {{location}} </option>
+        </select>
+
+        <br>
+        <br>
+        <!--  ng-show="biller_list.length > 0" -->
+        <div ng-show="biller_list.length > 0">Select Biller:</div>
+        <select ng-model="selectedBiller" ng-show="biller_list.length > 0" id="select">
+          <option ng-repeat="billername in biller_list" value="{{billername}}" ng-click="find_auth(selectedBiller)">
+            {{billername | uppercase}} </option>
+        </select>
+      
+        <br>
+        <br>
+        <br>
+        <table cellspacing="50" >
+          <tr>
+            <th>{{selectedBiller}}</h1>
+            </th>
+
+          </tr>
+          <tr>
+            <td colspan="3" style="padding:30px"><img ng-show="auth_list.push()" ng-hide="biller_list.push()"  src="{{logo}}"></td>
+          </tr>
+
+        </table>
+
+
+        <div>
+
+          <div id="auth" ng-show="auth_list.push()" ng-hide="biller_list.push()">
+              <form name="SaveForm" ng-submit="funcSave()">  
+            <table id="tab2" width="30%" style="padding:px" margin-top=50px;>
+
+              <tr ng-repeat="auth in auth_list">
+                <td colspan="2">Enter {{auth.parameter_name}} </td>
+                <td>:</td>
+                <!-- <td colspan="3"><input id="select" type="text" name="fname"></td> -->
+                <td colspan = "3">
+                    <input type="text" id="select"  ng-if="auth.data_type != 'List'" required="required" >
+                    <!-- <input type="text" id="select"  ng-pattern="{{auth.regex}}" ng-if="auth.data_type != 'List'" required="required" name="name{{auth.seq}}"  ng-model="{{auth.data_type}}"> -->
+                    <!-- <div  ng-messages="SaveForm.name{{auth.seq}}.$error" ng-if='SaveForm.name{{auth.seq}}.$dirty' ng-cloak>
+                   <div ng-message="required">{{auth.error_message}}</div>
+                   </div> -->
+                    <select ng-model="selectedChoice" ng-if="auth.data_type == 'List'">
+                     <option ng-repeat="choice in auth.list_of_values" value="{{choice.value}}" > {{choice.name}} </option>
+                   </select> 
+                 </td> 
+              </tr>
+
+
+              <tr>
+
+                <td colspan="2"></td>
+                <td></td>
+                <td colspan="3" style="padding:30px"><button id="button" ng-if="auth_list.push()" type="submit" form="form1"  value="Submit">Submit</button></td>
+
+              </tr>
+              
+
+            </table>
+         
+ 
+          <a><div class="popup" onclick="myFunction()" ng-show="auth_list.push()" id="sample1">Show Sample</a>
+            <span class="popuptext" id="myPopup"><img src="{{bill_copy}}" height="50%"></span>
+            </form>
+          </div>
+
+        </div>
+        </div>
+      </div>
+
+      <script>
+          // When the user clicks on div, open the popup
+          function myFunction() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+          }
+          </script>
+
+    </div>
+    <footer class="container-fluid text-center" id="foot">
+      <br>
+      <br>
+
+
+
+
+      <div class="grid-container">
+        <div class="item1"><b>Company</b></div>
+        <div class="item2"><b>Help & Support</b></div>
+        <div class="item3"><b>Policies</b></div>
+
+        <div class="item4">About</div>
+        <div class="item5">Home</div>
+        <div class="item6">Privacy Policy</div>
+        <!-- <div class="item8"></div> -->
+        <div class="item7">Team</div>
+        <div class="item8">Mobile Apps</div>
+        <div class="item9">Terms & Conditions</div>
+        <!-- <div class="item12"></div> -->
+        <div class="item10">Career</div>
+
+        <div class="item11">Payment Options</div>
+        <div class="item12">Refund Policy</div>
+        <!-- <div class="item16"></div> -->
+        <div class="item13">Blog</div>
+
+        <div class="item14">FAQ</div>
+        <div class="item15">Grievance Policy</div>
+        <div class="item16"></div>
+
+      </div>
+  </div>
+  <br>
+  <div class="grid-container">
+    <div class="item1"><b>Verified by</b></div>
+    <div class="item2"><b>Connect Us</b></div>
+    <div class="item3"><b>Powered by</b></div>
+    <div class="item4"><img src="pci2.jpg" height="15%"></div>
+    <div class="item5"><img src="fb.png" height="15%"><img src="insta.jfif" height="15%"><img src="twi.png"
+        height="15%"></div>
+    <div class="item6"><img src="BD-Logo-Black.png" height="15%"></div>
+  </div>
+
+
+
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns="http://wwww.w3.org/1999/xhtml">
+<head>
+  <title>Bill Payments</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+       <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.5/chosen.jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.5/chosen.min.js">       
+        <script src="data.js" type="text/javascript"></script>
+
+  <style>
+      div.field{
+          margin-left: 4cm;
+          margin-top: 6cm;
+          width:10;
+          
+          
+          
+      }
+
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+
+  </style>
+  <script>
+    var mainApp = angular.module('myApp',[])
+           mainApp.controller('controller_biller', function($scope){
+               //console.log(billers)
+                       
+                       $scope.category = 'None';
+                       $scope.test1 = function (category) {
+                           $scope.category = category;
+                           $scope.biller_list = [];
+                           billers.forEach(function(biller){
+                           if(biller.biller_category == category)	{
+   
+                               if(!($scope.biller_list.includes(biller.biller_name)))
+                                       $scope.biller_list.push(biller.biller_name);
+                               //$scope.biller_list.push(biller.biller_name);	
+                           }												
+                       })	
+   
+                       }
+                    //    $scope.test2 = function() {
+                    //        return false;
+                    //    }
+                    $scope.selectedBiller = '';
+					$scope.find_auth = function (selectedBiller) {
+						$scope.selectedBiller = selectedBiller;
+						//console.log($scope.selectedBiller);
+            $scope.auth_list = [];
+            var i=0;
+						billers.forEach(function(biller){
+						if(biller.biller_name == selectedBiller)	{
+							//console.log(biller.authenticators[0].parameter_name);
+							for( i=0;i<biller.authenticators.length;i++){
+								
+								if(!($scope.auth_list.includes(biller.authenticators[i].parameter_name)))
+                   					 $scope.auth_list.push(biller.authenticators[i].parameter_name);
+								//$scope.biller_list.push(biller.biller_name);	
+							}
+							//console.log(biller.authenticators[i].parameter_name);
+						}												
+					})
+					//console.log($scope.auth_list);	
+
+					}          
+           })
+
+   </script>
+</head>
+
+
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Welcome</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">Partner with us</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Easy Bill</h1>      
+    <p>Pay ALL your Bills here.</p>
+  </div>
+</div>
+
+<!-- 1ST ROW -->
+<div ng-app="myApp" ng-controller="controller_biller">
+  <div class="row" align="center"  >
+
+    <div class="col-lg-2" >
+      <p>Electricity</p>
+      <a ng-click="test1('Electricity')"><img src="elec.jpg" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+      <!-- <button ng-click="test1('Electricity')"><img src="elec.jpg" class="img-responsive" height="40%" width="40%" alt="Image"  ></button> -->
+      
+      <!-- <select ng-show="biller_list.length>0"><option ng-repeat="billername in biller_list">{{billername}}</option>
+      </select> -->
+    
+    </div>
+    
+    <div class="col-lg-2" > 
+      <p>Mobile Recharge</p>
+      <a ng-click="test1('Mobile Postpaid')"><img src="mobile.png" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+     <!-- <a href="mobile.html"> <img src="mobile.png" class="img-responsive"  height="40%" width="40%" alt="Image"></a> -->
+     <!-- <select ng-show="biller_list.length>0"><option ng-repeat="billername in biller_list">{{billername}}</option>
+     </select> -->
+   
+    </div>
+
+    <div class="col-lg-2"> 
+      <p>DTH</p>
+      <a ng-click="test1('DTH')"><img src="dth.png" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+
+     <!-- <a href="dth.html"> <img src="dth.png" class="img-responsive" height="40%" width="40%"  alt="Image"></a> -->
+     <!-- <select ng-show="biller_list.length>0"><option ng-repeat="billername in biller_list">{{billername}}</option>
+     </select> -->
+    </div>
+
+    <div class="col-lg-2">
+      <p>Landline</p>
+      <a ng-click="test1('Landline Postpaid')"><img src="landline.jpg" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+    <!-- <a href="ll.html">  <img src="landline.jpg" class="img-responsive" height="40%" width="40%" alt="Image"></a> -->
+    </div>
+
+	<div class="col-lg-2">
+      <p>Broadband</p>
+      <a ng-click="test1('Broadband Postpaid')"><img src="broadband.jpg" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+
+     <!-- <a href="bb.html"> <img src="broadband.jpg" class="img-responsive" height="40%" width="40%" alt="Image"></a> -->
+    </div>
+
+	<div class="col-lg-2">
+      <p>Gas</p>
+      <a ng-click="test1('Gas')"><img src="gas.jpg" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+     <!-- <a href="gas.html"> <img src="gas.jpg" class="img-responsive" height="40%" width="40%" alt="Image"></a> -->
+    </div>
+
+
+	
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+
+<!--   2ND ROW -->
+  <div class="row"  width="100%" align="center" margin-top="50%" >
+    <div class="col-lg-2 col-centered" >
+      <p>Loan</p>
+      <a ng-click="test1('Loan')"><img src="loan.png" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+
+    <!-- <a href="loan.html">  <img src="loan.png"class="img-responsive" height="40%" width="40%" alt="Image"></a> -->
+    </div>
+    <div class="col-lg-2"> 
+      <p>Credit Card</p>
+      <a ng-click="test1('Credit Card')"><img src="credit.png" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+    <!-- <a href="cc.html">  <img src="credit.png" class="img-responsive"  height="40%" width="40%" alt="Image"></a> -->
+    </div>
+    <div class="col-lg-2"> 
+      <p>Mutual Fund</p>
+      <a ng-click="test1('Mutual Fund')"><img src="mutual.png" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+
+     <!-- <a href="mf.html"> <img src="mutual.png" class="img-responsive" height="40%" width="40%"  alt="Image"></a> -->
+    </div>
+    <div class="col-lg-2">
+      <p>Tax</p>
+      <a ng-click="test1('Tax')"><img src="tax.png" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+
+    <!-- <a href="tax.html">  <img src="tax.png" class="img-responsive" height="40%" width="40%" alt="Image"></a> -->
+    </div>
+	<div class="col-lg-2">
+      <p>Donation</p>
+      <a ng-click="test1('Donation')"><img src="donation.png" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+
+     <!-- <a href="don.html"> <img src="donation.png" class="img-responsive" height="40%" width="40%" alt="Image"></a> -->
+    </div>
+	<div class="col-lg-2">
+      <p>Subscription</p>
+      <a ng-click="test1('Subscription')"><img src="subs.png" class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+
+    <!-- <a href="subs.html">  <img src="subs.png" class="img-responsive" height="40%" width="40%" alt="Image"></a> -->
+    </div>
+    
+    <div class="field"  width="100%" align="left" margin-top="100%" margin-left="100%" >
+            <select ng-model="selectedBiller" ng-show="biller_list.length > 0" class="chosen">
+
+                    <option ng-repeat="billername in biller_list" value="{{billername}}" ng-click="find_auth(selectedBiller)"> {{billername | uppercase }} </option>
+            </select>
+            <h1>{{selectedBiller}}<img  ng-show="auth_list.length >0" src="https://www.billdesk.com/billers/reliance_eng.jpg"></h1>
+    
+                         <div  ng-repeat = "auth in auth_list ">
+                            <!-- {{auth}} -->
+                            <table>
+                                <tr>
+                    <th>{{auth}}</th>
+                    <th></th>
+                                    <th><input type="text" name="fname"><br></th>
+                                    
+                                </tr>
+                            </table>
+              
+                                    
+                        </div>
+        </div>
+      </div>
+      
+    </div>
+<!-- <footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer> -->
+
+</body>
+<script type="text/javascript" >
+$(chosen).chosen();
+</script>
+</html>

@@ -1,0 +1,75 @@
+h1{
+          text-color: aqua;
+          
+        }
+      div.field
+        {
+          margin-left: 4cm;
+          margin-top: 6cm;
+          width:10;
+        }
+
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+
+    #pay{
+    
+        background: linear-gradient(to top, #ff6600 0%, #ff9933 100%);
+              font-size: 20px;
+      height: 200px;
+    }
+    #bdlogo
+    {
+      position: relative;
+      left:1600px;
+      bottom:160px;
+     
+    }
+    #foot{
+      background-color:#faf8a5;
+    }
+    #para{
+      text-align: justify;
+    }
+
+    #easypay{
+      margin-bottom: 40px;
+      color: #211f1d;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-column-gap: 50px;
+        grid-row-gap: 10px;
+        padding: 0px;
+        
+      }
+      
+      .grid-container > div {
+      
+        text-align: center;
+        padding:0px ;
+        font-size: 15px;
+
+      }
+      
+      #input{
+        position: relative;
+        left:100px;
+        bottom:250px;
+      }
+
+      #auth{
+        position: relative;
+        left:1000px;
+        bottom:290px;
+      }

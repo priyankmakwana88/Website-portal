@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://wwww.w3.org/1999/xhtml">
+<head>
+  <title>Bill Payments</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+        <script src=  "all.js"></script>
+
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Welcome</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">Partner with us</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Easy Bill</h1>      
+    <p>Pay ALL your Bills here.</p>
+  </div>
+</div>
+
+<!-- 1ST ROW -->
+
+  <div class="row" align="center"  ng-app="myApp"  >
+
+    <div class="col-lg-2">
+      <p>Electricity</p>
+    <a href="#!/electricity"><img src="elec.jpg"class="img-responsive" height="40%" width="40%" alt="Image" ></a>
+   <br><br><br><br><br><br>
+    <div ng-view></div>
+    
+    </div>
+    
+    <div class="col-lg-2" > 
+      <p>Mobile Recharge</p>
+     <a href="mobile.html"> <img src="mobile.png" class="img-responsive"  height="40%" width="40%" alt="Image"></a>
+    </div>
+    <div class="col-lg-2"> 
+      <p>DTH</p>
+     <a href="dth.html"> <img src="dth.png" class="img-responsive" height="40%" width="40%"  alt="Image"></a>
+    </div>
+    <div class="col-lg-2">
+      <p>Landline</p>
+    <a href="ll.html">  <img src="landline.jpg" class="img-responsive" height="40%" width="40%" alt="Image"></a>
+    </div>
+	<div class="col-lg-2">
+      <p>Broadband</p>
+     <a href="bb.html"> <img src="broadband.jpg" class="img-responsive" height="40%" width="40%" alt="Image"></a>
+    </div>
+	<div class="col-lg-2">
+      <p>Gas</p>
+     <a href="gas.html"> <img src="gas.jpg" class="img-responsive" height="40%" width="40%" alt="Image"></a>
+    </div>
+
+
+	
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+<!-- <script>
+      var app = angular.module('myApp', ["ngRoute"])
+                app.config(function ($routeProvider) {
+                        $routeProvider
+                        .when("/electricity", {
+                          templateUrl: "electricity.html",
+                          controller: "aaController"
+                              })
+
+                          });
+
+app.controller('aaController', function($scope) 
+{
+$scope.serviceProviders = ["Reliance", "Tata Power", "Torrent"];
+
+
+});
+
+</script> -->
+<!--   2ND ROW -->
+  <div class="row"  width="100%" align="center" margin-top="50%">
+    <div class="col-lg-2 col-centered" >
+      <p>Loan</p>
+    <a href="loan.html">  <img src="loan.png"class="img-responsive" height="40%" width="40%" alt="Image"></a>
+    </div>
+    <div class="col-lg-2"> 
+      <p>Credit Card</p>
+    <a href="cc.html">  <img src="credit.png" class="img-responsive"  height="40%" width="40%" alt="Image"></a>
+    </div>
+    <div class="col-lg-2"> 
+      <p>Mutual Fund</p>
+     <a href="mf.html"> <img src="mutual.png" class="img-responsive" height="40%" width="40%"  alt="Image"></a>
+    </div>
+    <div class="col-lg-2">
+      <p>Tax</p>
+    <a href="tax.html">  <img src="tax.png" class="img-responsive" height="40%" width="40%" alt="Image"></a>
+    </div>
+	<div class="col-lg-2">
+      <p>Donation</p>
+     <a href="don.html"> <img src="donation.png" class="img-responsive" height="40%" width="40%" alt="Image"></a>
+    </div>
+	<div class="col-lg-2">
+      <p>Subscription</p>
+    <a href="subs.html">  <img src="subs.png" class="img-responsive" height="40%" width="40%" alt="Image"></a>
+    </div>
+	
+  </div>
+  
+  
+<!-- <footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer> -->
+
+</body>
+</html>
